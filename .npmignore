@@ -1,0 +1,7 @@
+.idea
+src
+node_modules
+gulpfile.js
+.gitignore
+linux_bin
+test
