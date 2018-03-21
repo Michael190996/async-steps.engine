@@ -6,7 +6,7 @@
 
 # Async-steps.engine (0.0.1) **BETA**
 ## Что это?
-**Async-steps.engine** - реализация движка последовательных иструкций.
+**Async-steps.engine** - реализация движка последовательных блоков иструкций.
 * [Установка](#setup)
 * [Пример](#example)
 * [API](#api)
@@ -121,6 +121,7 @@ ase.run('data')
     - {function} fn
 
   * .compose() - compose
+    * Примечание: Если результат промежуточной функции неопределен, то результат не сохраняется
 
 #### Events
 Класс событий, расширенный от нативного класса [Events](https://nodejs.org/api/events.html#events_events)
@@ -153,7 +154,7 @@ ase.run('data')
 ### Params
 ##### steps
 - {object[[step](#step)]} steps
-    
+
 ##### step
 - {object} step
   - {string} [name] - имя шага
@@ -163,3 +164,4 @@ ase.run('data')
       - {Error} error
       - [namespace - экземпляр класса Namespace](#namespace)
     - результат функции при истинном значении записывается в data
+  * Примечание: Если результат шага неопределен, то результат не сохраняется
