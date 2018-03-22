@@ -4,7 +4,7 @@
   [![stable](https://img.shields.io/badge/stablity-beta-green.svg?style=flat)](https://www.npmjs.com/package/async-steps.engine)
 [![NPM](https://nodei.co/npm/async-steps.engine.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/async-steps.engine)
 
-# Async-steps.engine (0.0.1) **BETA**
+# Async-steps.engine (0.0.2) **BETA**
 ## Что это?
 **Async-steps.engine** - реализация движка последовательных блоков иструкций.
 * [Установка](#setup)
@@ -53,6 +53,7 @@ ase.run('data')
 ## API
 ### Classes-controllers
 #### AsyncStepsEngine
+- import AsyncStepsEngine from 'async-steps.engine'
 * AsyncStepsEngine(steps[, middleware][, events])
   - [steps](#steps)
   - [[events] - экземпляр класса Events](#events)
@@ -76,6 +77,7 @@ ase.run('data')
     - {*} [data] - данные
 
 #### Namespace
+- import {Namespace} from 'async-steps.engine'
 * Namespace(stepIndex, steps, parentsNamespace, middleware, events)
   - stepIndex - индекс текущей позиции шага в steps
   - [steps](#steps)
@@ -112,8 +114,9 @@ ase.run('data')
   * .child(steps) - метод возвращает новый экземпляр класса [AsyncStepsEngine](#asyncstepsengine) со заданной позицией
     - [steps](#steps)
 
-#### middleware
+#### Middleware
 Класс, управляющий промежуточными результатами
+- import {Middleware} from 'async-steps.engine'
 * Middleware()
   * .middlewares - Возвращает все middlewares
 
@@ -125,6 +128,7 @@ ase.run('data')
 
 #### Events
 Класс событий, расширенный от нативного класса [Events](https://nodejs.org/api/events.html#events_events)
+- import {Events} from 'async-steps.engine'
 * Events()
   * .initSteps([data, ]parentsNamespace)
     - {*} [data]
