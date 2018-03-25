@@ -69,10 +69,6 @@ ase.run('data')
   * .createNamespace(indexStep)
     - {number} indexStep
 
-  * startStep(data, namespace)
-    - [data] - данные
-    - [namespace - экземпляр класса Namespace](#namespace)
-
   * .run([data])
     - {*} [data] - данные
 
@@ -163,9 +159,9 @@ ase.run('data')
 - {object} step
   - {string} [name] - имя шага
   - {boolean} [sync] - синхронность шага
-  - {function} [throwError] - функция, обрабатывающая исключения
+  - {function} [throwError] - функция, обрабатывающая исключения. Заменяет событие error
     - function throwError(error, namespace)
       - {Error} error
       - [namespace - экземпляр класса Namespace](#namespace)
-    - результат функции при истинном значении записывается в data
+    * Примечание: Если результат функции неопределен, то результат не сохраняется
   * Примечание: Если результат шага неопределен, то результат не сохраняется

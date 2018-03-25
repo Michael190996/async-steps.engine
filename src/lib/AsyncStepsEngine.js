@@ -2,8 +2,6 @@ import Middleware from './Middleware';
 import Namespace from './Namespace';
 import Events from './Events';
 
-const debug = require('debug')('async-steps-engine:AsyncStepsEngine');
-
 export default class AsyncStepsEngine {
   constructor(steps, middleware = new Middleware(), events = new Events()) {
     if (!Array.isArray(steps)) {
@@ -54,23 +52,6 @@ export default class AsyncStepsEngine {
   }
 
   /**
-   * @param {*} data
-   * @param namespace - экземпляр класса Namespace
-   * @return {Promise}
-   */
-  async startStep(data, namespace) {
-    debug(`start step "${namespace.getScheme()}"`);
-    this.events.startStep(data, namespace);
-
-    data = await this.middleware.compose()(data, namespace);
-
-    debug(`end step "${namespace.getScheme()}"`);
-    this.events.endStep(data, namespace);
-
-    return data;
-  }
-
-  /**
    * Метод запускает последовательно steps
    *
    * @param {*} [data] - данные
@@ -80,26 +61,29 @@ export default class AsyncStepsEngine {
     const promises = [];
     let result = data;
 
-    debug('initSteps');
     this.events.initSteps(result, this._parentsNamespace);
 
     for (let i = 0; i < this._steps.length; i++) {
       const namespace = this.createNamespace(i);
       let response;
 
+      this.events.startStep(data, namespace);
+
       try {
-        const startStep = this.startStep(result, namespace);
+        const startStep = this.middleware.compose()(result, namespace);
 
         if (!namespace.sync) {
           response = await startStep;
-          result = response || result;
+          result = response !== undefined ? response : result;
         }
 
         promises.push(startStep);
       } catch (err) {
-        this.events.error(err, namespace);
-        result = await namespace.throwError(err) || result;
+        response = await namespace.throwError(err);
+        result = response !== undefined ? response : result;
       }
+
+      this.events.endStep(data, namespace);
 
       if (namespace.getBreak()) {
         break;
@@ -109,7 +93,6 @@ export default class AsyncStepsEngine {
     const RESULTS = await Promise.all(promises);
     this.events.endSteps(RESULTS, this._parentsNamespace);
 
-    debug('endSteps');
     return result;
   }
 }

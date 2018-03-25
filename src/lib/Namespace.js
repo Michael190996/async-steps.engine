@@ -11,8 +11,8 @@ export default class Namespace {
     this._events = events;
     this._break = false;
     this._sync = !!this.step.sync;
-    this._throwError = (typeof this.step.throwError === 'function' ? this.step.throwError : (err) => {
-      throw err;
+    this._throwError = (typeof this.step.throwError === 'function' ? this.step.throwError : (err, ns) => {
+      this.events.error(err, ns);
     });
   }
 

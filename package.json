@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Michael190996/async-steps.engine"
   },
   "scripts": {
-    "test": "DEBUG=async-steps-engine:*;./node_modules/mocha/bin/mocha --compilers js:babel-core/register --timeout=50000",
+    "test": "DEBUG=async-steps-engine;./node_modules/mocha/bin/mocha --compilers js:babel-core/register --timeout=50000",
     "test:nodebug": "./node_modules/mocha/bin/mocha --compilers js:babel-core/register --timeout=50000",
     "build": "node_modules/.bin/babel-node --presets node6 node_modules/gulp/bin/gulp.js build:dev",
     "prepublish": "node_modules/.bin/babel-node --presets node6 node_modules/gulp/bin/gulp.js build:prod"
